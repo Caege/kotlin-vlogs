@@ -1,1 +1,1 @@
-default texts
+Check the branches to see all the projects I covered in my Kotlin vlogs
