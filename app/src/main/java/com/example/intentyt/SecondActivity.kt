@@ -56,7 +56,6 @@ class SecondActivity : ComponentActivity() {
 						Button(onClick = {}) {
 							Text("Second Activity")
 						}
-
 						//use callingActivity to check if the activity is started for result or not and display the button accordingly
 						val isStartedForResult = callingActivity != null
 						if (isStartedForResult) {
@@ -74,11 +73,6 @@ class SecondActivity : ComponentActivity() {
 				}
 			}
 		}
-//		val result: String? = intent.getStringExtra("person")
-//
-//		if (result != null) {
-//			Toast.makeText(this, result, Toast.LENGTH_LONG).show()
-//		}
 
 
 	}
