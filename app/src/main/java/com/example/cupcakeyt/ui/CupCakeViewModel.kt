@@ -1,11 +1,16 @@
 package com.example.cupcakeyt.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.cupcakeyt.data.CupCakeUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
@@ -40,14 +45,20 @@ class CupCakeViewModel : ViewModel() {
 	}
 
 
+	@RequiresApi(Build.VERSION_CODES.O)
 	fun pickupOptions () : List<String> {
 		val dateOptions = mutableListOf<String>()
-		val calendar = Calendar.getInstance()
-		val formatter = SimpleDateFormat("EEEE MMMM d", Locale.US)
+
+
+//		val calendar = Calendar.getInstance()
+		var date = LocalDate.now()
+		val format  = DateTimeFormatter.ofPattern("EEEE MMMM d")
+
+//		val formatter = SimpleDateFormat("EEEE MMMM d", Locale.US)
 
 		repeat(4) {
-			dateOptions.add(formatter.format(calendar.time))
-			calendar.add(Calendar.DATE, 1)
+			dateOptions.add(date.format(format))
+			date = date.plusDays(1)
 		}
 
 

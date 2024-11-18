@@ -1,5 +1,7 @@
 package com.example.cupcakeyt
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,8 @@ import com.example.cupcakeyt.ui.CupCakeViewModel
 import com.example.cupcakeyt.ui.SelectOptionsScreen
 import com.example.cupcakeyt.ui.StartOrderScreen
 import com.example.cupcakeyt.ui.SummeryScreen
+import java.text.NumberFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +44,7 @@ enum class CupCakeRoutes( val title : String ){
 	Start("Select amount"), Flavor("Select Flavor"),PickUp("Select pickup date"),Summery("Order summery")
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CupCakeApp(modifier: Modifier = Modifier, navController: NavHostController = rememberNavController(), cupCakeViewModel: CupCakeViewModel = viewModel()) {
@@ -92,11 +97,11 @@ fun CupCakeApp(modifier: Modifier = Modifier, navController: NavHostController =
 			}
 
 			composable(CupCakeRoutes.Flavor.name){
-				SelectOptionsScreen(options = DataSource.flavors, subtotal = subtotal.toString(), onSelected = {flavor : String -> cupCakeViewModel.setFlavor(flavor)}, onNextButtonIsclicked = { navController.navigate(CupCakeRoutes.PickUp.name)}, onCancelButtonIsClicked = {navController.navigate(CupCakeRoutes.Start.name)})
+				SelectOptionsScreen(options = DataSource.flavors, subtotal = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(subtotal), onSelected = { flavor : String -> cupCakeViewModel.setFlavor(flavor)}, onNextButtonIsclicked = { navController.navigate(CupCakeRoutes.PickUp.name)}, onCancelButtonIsClicked = {navController.navigate(CupCakeRoutes.Start.name)})
 			}
 
 			composable(CupCakeRoutes.PickUp.name){
-				SelectOptionsScreen(options = cupCakeViewModel.pickupOptions(), subtotal = subtotal.toString(),onNextButtonIsclicked = { navController.navigate(CupCakeRoutes.Summery.name)},onCancelButtonIsClicked = {navController.navigate(CupCakeRoutes.Start.name)}, onSelected = {userpick -> cupCakeViewModel.setPickDate(userpick)})
+				SelectOptionsScreen(options = cupCakeViewModel.pickupOptions(), subtotal = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(subtotal),onNextButtonIsclicked = { navController.navigate(CupCakeRoutes.Summery.name)},onCancelButtonIsClicked = {navController.navigate(CupCakeRoutes.Start.name)}, onSelected = {userpick -> cupCakeViewModel.setPickDate(userpick)})
 			}
 
 			composable(CupCakeRoutes.Summery.name){

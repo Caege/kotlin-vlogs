@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
@@ -26,60 +27,53 @@ import com.example.cupcakeyt.data.DataSource
 import com.example.cupcakeyt.ui.components.FormatedTotal
 
 @Composable
-fun SelectOptionsScreen(options: List<String>, subtotal : String, onSelected: (String)-> Unit, onNextButtonIsclicked : () -> Unit, onCancelButtonIsClicked : () -> Unit) {
-
+fun SelectOptionsScreen(options: List<String>, subtotal: String, onSelected: (String) -> Unit, onNextButtonIsclicked: () -> Unit, onCancelButtonIsClicked: () -> Unit) {
 	var selected by remember {
 		mutableStateOf("")
 	}
-	Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start, modifier = Modifier
-		.fillMaxSize()
-		.padding(horizontal = 16.dp, vertical = 20.dp)) {
-
+	Column(
+		verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start, modifier = Modifier
+			.fillMaxSize()
+			.padding(horizontal = 16.dp, vertical = 20.dp)
+	) {
 		options.forEach {
-			Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.selectable(selected = selected == it){
+			Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.selectable(selected = selected == it) {
 				selected = it
 
 
 
-					onSelected(it)
-
-
-
+				onSelected(it)
 			}) {
 				RadioButton(selected = selected == it, onClick = {
 					selected = it
 
-						onSelected(it)
-
+					onSelected(it)
 				})
 
 				Text(text = it)
 			}
-			
+
 
 
 			HorizontalDivider()
-
-
-
 		}
-		Spacer(modifier = Modifier.height(50.dp))
 
 
-		FormatedTotal(subtotal = subtotal, modifier = Modifier.align(Alignment.End))
-		
-		Spacer(modifier = Modifier.height(50.dp))
 
-		Row(modifier = Modifier.fillMaxSize()) {
-			OutlinedButton(onClick = { onCancelButtonIsClicked() }, modifier =  Modifier.weight(1f)) {
+		FormatedTotal(subtotal = subtotal, modifier = Modifier.align(Alignment.End).padding(top = 16.dp))
+
+
+		Spacer(modifier = Modifier.weight(1f))
+
+		Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+			OutlinedButton(onClick = { onCancelButtonIsClicked() }, modifier = Modifier.weight(1f)) {
 				Text("Cancel")
 			}
-			Button(onClick = { onNextButtonIsclicked() }, modifier =  Modifier.weight(1f), enabled = selected != "") {
+			Button(onClick = { onNextButtonIsclicked() }, modifier = Modifier.weight(1f), enabled = selected != "") {
 				Text(text = "Next")
 			}
 		}
 	}
-
 
 
 }
