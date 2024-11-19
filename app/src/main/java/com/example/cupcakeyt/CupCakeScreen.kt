@@ -86,8 +86,8 @@ fun CupCakeApp(modifier: Modifier = Modifier, navController: NavHostController =
 			titleContentColor = MaterialTheme.colorScheme.primary,
 		))
 	}) { innerPadding ->
+var subtotal =  cupCakeViewModel.uiState.collectAsState().value.price
 
-		val subtotal = cupCakeViewModel.uiState.collectAsState().value.price
 
 		NavHost(navController = navController, startDestination = CupCakeRoutes.Start.name, modifier = Modifier.padding(innerPadding)) {
 			composable(CupCakeRoutes.Start.name){
@@ -97,7 +97,7 @@ fun CupCakeApp(modifier: Modifier = Modifier, navController: NavHostController =
 			}
 
 			composable(CupCakeRoutes.Flavor.name){
-				SelectOptionsScreen(options = DataSource.flavors, subtotal = NumberFormat.getCurrencyInstance(Locale("en", "US")).format(subtotal), onSelected = { flavor : String -> cupCakeViewModel.setFlavor(flavor)}, onNextButtonIsclicked = { navController.navigate(CupCakeRoutes.PickUp.name)}, onCancelButtonIsClicked = {navController.navigate(CupCakeRoutes.Start.name)})
+				SelectOptionsScreen(options = DataSource.flavors, subtotal = NumberFormat.getCurrencyInstance().format(subtotal), onSelected = { flavor : String -> cupCakeViewModel.setFlavor(flavor)}, onNextButtonIsclicked = { navController.navigate(CupCakeRoutes.PickUp.name)}, onCancelButtonIsClicked = {navController.navigate(CupCakeRoutes.Start.name)})
 			}
 
 			composable(CupCakeRoutes.PickUp.name){
@@ -105,7 +105,7 @@ fun CupCakeApp(modifier: Modifier = Modifier, navController: NavHostController =
 			}
 
 			composable(CupCakeRoutes.Summery.name){
-				SummeryScreen(cupCakeUiState = cupCakeViewModel.uiState.collectAsState().value,  onCancelIsClicked = {navController.navigate(CupCakeRoutes.Start.name)})
+				SummeryScreen(cupCakeUiState = cupCakeViewModel.uiState.collectAsState().value,  onCancelIsClicked = {navController.popBackStack(CupCakeRoutes.Start.name, false) })
 			}
 		}
 
