@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CoroutineTest</string>
+    <string name="test_value">Good Ol English</string>
+</resources>
